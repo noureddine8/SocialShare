@@ -9,6 +9,8 @@ import { fetchUserFollowing } from "../../redux/actions/user";
 function Profile({ route }) {
   const [name, setName] = useState(null);
   const [posts, setPosts] = useState(null);
+  const [followers, setFollowers] = useState(null);
+  const [followings, setFollowings] = useState(null);
   const [following, setFollowing] = useState(null);
 
   //redux
@@ -49,6 +51,32 @@ function Profile({ route }) {
           });
           setPosts(posts);
         });
+
+      firebase
+        .firestore()
+        .collection("following")
+        .doc(route.params.id)
+        .collection("userFollowing")
+        .onSnapshot((snapshot) => {
+          let following = snapshot.docs.map((fol) => {
+            const id = fol.id;
+            return id;
+          });
+          setFollowings(following);
+        });
+
+      firebase
+        .firestore()
+        .collection("followers")
+        .doc(route.params.id)
+        .collection("userFollowed")
+        .onSnapshot((snapshot) => {
+          let followers = snapshot.docs.map((fol) => {
+            const id = fol.id;
+            return id;
+          });
+          setFollowers(followers);
+        });
     }
     if (state.following.indexOf(route.params.id) > -1) {
       setFollowing(true);
@@ -66,6 +94,15 @@ function Profile({ route }) {
         .collection("userFollowing")
         .doc(route.params.id)
         .delete();
+
+      firebase
+        .firestore()
+        .collection("followers")
+        .doc(route.params.id)
+        .collection("userFollowed")
+        .doc(firebase.auth().currentUser.uid)
+        .delete();
+
       setFollowing((prev) => !prev);
     } else {
       firebase
@@ -75,13 +112,21 @@ function Profile({ route }) {
         .collection("userFollowing")
         .doc(route.params.id)
         .set({});
+      firebase
+        .firestore()
+        .collection("followers")
+        .doc(route.params.id)
+        .collection("userFollowed")
+        .doc(firebase.auth().currentUser.uid)
+        .set({});
+
       setFollowing((prev) => !prev);
     }
   };
 
   const backGround = following ? "#fff" : "#0a66c2";
 
-  return !posts || !name || following == null ? (
+  return !posts || !name || following == null || !followings || !followers ? (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <ActivityIndicator size="large" color="#0a66c2" />
     </View>
@@ -91,7 +136,7 @@ function Profile({ route }) {
         <View style={{ flex: 1 }}>
           <View
             style={{
-              flex: 0.3,
+              flex: 0.1,
               justifyContent: "space-between",
               flexDirection: "row",
               margin: 5,
@@ -113,11 +158,64 @@ function Profile({ route }) {
               color="#0a66c2"
             />
           </View>
-          <Text style={styles.text}>{name}</Text>
           <View
             style={{
-              flex: 1,
-              padding: 10,
+              flex: 0.5,
+              alignItems: "center",
+              flexDirection: "row",
+              padding: 5,
+            }}
+          >
+            <View style={{ flex: 4 / 10 }}>
+              <Text style={styles.text}>{name}</Text>
+            </View>
+            <View
+              style={{
+                flex: 3 / 10,
+
+                padding: 5,
+              }}
+            >
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#0a66c2",
+                  borderRadius: 25,
+                }}
+              >
+                <Text style={{ color: "white", fontSize: 18 }}>Followers</Text>
+                <Text style={{ color: "white", fontSize: 17 }}>
+                  {followers.length}
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flex: 3 / 10,
+
+                padding: 5,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: "#0a66c2",
+                  borderRadius: 25,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "white", fontSize: 18 }}>Following</Text>
+                <Text style={{ color: "white", fontSize: 17 }}>
+                  {followings.length}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 0.4,
+              justifyContent: "center",
             }}
           >
             <Button
@@ -187,14 +285,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#d9ebfc",
   },
   userInfo: {
-    flex: 4 / 10,
-  },
-  posts: {
     flex: 5 / 10,
   },
+  posts: {
+    flex: 4 / 10,
+  },
   text: {
-    flex: 0.5,
-    margin: 20,
     color: "black",
     fontStyle: "italic",
     fontWeight: "bold",

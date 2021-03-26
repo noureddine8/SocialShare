@@ -82,7 +82,9 @@ function Profile() {
                 }}
               >
                 <Text style={{ color: "white", fontSize: 18 }}>Followers</Text>
-                <Text style={{ color: "white", fontSize: 17 }}>50</Text>
+                <Text style={{ color: "white", fontSize: 17 }}>
+                  {user.followers.length}
+                </Text>
               </View>
             </View>
             <View

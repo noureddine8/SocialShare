@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { fetchUser, fetchUserPosts } from "../redux/actions/user";
+import {
+  fetchUser,
+  fetchUserPosts,
+  fetchUserFollowing,
+  fetchUserFollowed,
+} from "../redux/actions/user";
 import { useDispatch, useSelector } from "react-redux";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -7,6 +12,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Feed from "./main/Feed";
 import Profile from "./main/Profile";
 import Search from "./main/Search";
+import firebase from "firebase";
 
 const Empty = () => {
   return null;
@@ -20,6 +26,8 @@ function Main(props) {
   useEffect(() => {
     dispatch(fetchUser());
     dispatch(fetchUserPosts());
+    dispatch(fetchUserFollowing());
+    dispatch(fetchUserFollowed());
   }, []);
   useEffect(() => {
     setCurrentUser(user.currentUser);

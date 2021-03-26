@@ -3,6 +3,7 @@ import {
   USER_STATE_CHANGED,
   USER_POSTS_STATE_CHANGED,
   USER_FOLLOWING_STATE_CHANGED,
+  USER_FOLLOWED_STATE_CHANGED,
 } from "../ActionTypes";
 
 export const fetchUser = () => (dispatch) => {
@@ -50,5 +51,20 @@ export const fetchUserFollowing = () => (dispatch) => {
         return id;
       });
       dispatch({ type: USER_FOLLOWING_STATE_CHANGED, following });
+    });
+};
+
+export const fetchUserFollowed = () => (dispatch) => {
+  firebase
+    .firestore()
+    .collection("followers")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("userFollowed")
+    .onSnapshot((snapshot) => {
+      let followers = snapshot.docs.map((fol) => {
+        const id = fol.id;
+        return id;
+      });
+      dispatch({ type: USER_FOLLOWED_STATE_CHANGED, followers });
     });
 };
