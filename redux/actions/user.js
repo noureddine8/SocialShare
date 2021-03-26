@@ -31,6 +31,5 @@ export const fetchUserPosts = () => (dispatch) => {
         return { id, ...data };
       });
       dispatch({ type: USER_POSTS_STATE_CHANGED, posts });
-      console.log("Posts : ", posts);
     });
 };

@@ -5,6 +5,7 @@ import Login from "./components/auth/Login";
 import Main from "./components/Main";
 import Add from "./components/main/Add";
 import Save from "./components/main/Save";
+import OtherProfile from "./components/main/OtherProfile";
 import { ActivityIndicator, View, LogBox } from "react-native";
 import firebase from "firebase";
 import { firebaseConfig } from "./config/Firebase";
@@ -33,6 +34,7 @@ export default function App() {
         setState({ loggedIn: false, loaded: true });
       } else {
         setState({ loggedIn: true, loaded: true });
+        console.log("hhhhhh" + user);
       }
     });
   }, []);
@@ -48,7 +50,22 @@ export default function App() {
     if (!loggedIn) {
       return (
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Landing">
+          <Stack.Navigator
+            initialRouteName="Landing"
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: "#0a66c2",
+              },
+              headerTitleStyle: {
+                fontFamily: "monospace",
+                fontWeight: "bold",
+                color: "white",
+                fontSize: 24,
+              },
+              headerTitleAlign: "center",
+              title: "SOCIAL",
+            }}
+          >
             <Stack.Screen
               name="Landing"
               component={Landing}
@@ -63,14 +80,30 @@ export default function App() {
       return (
         <Provider store={store}>
           <NavigationContainer>
-            <Stack.Navigator initialRouteName="Main">
+            <Stack.Navigator
+              initialRouteName="Main"
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: "#0a66c2",
+                },
+                headerTitleStyle: {
+                  fontFamily: "monospace",
+                  fontWeight: "bold",
+                  color: "white",
+                  fontSize: 24,
+                },
+                headerTitleAlign: "center",
+                title: "SOCIAL",
+              }}
+            >
+              <Stack.Screen name="Main" component={Main} />
               <Stack.Screen
-                name="Main"
-                component={Main}
+                name="Add"
+                component={Add}
                 options={{ headerShown: false }}
               />
-              <Stack.Screen name="Add" component={Add} />
               <Stack.Screen name="Save" component={Save} />
+              <Stack.Screen name="OtherProfile" component={OtherProfile} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>

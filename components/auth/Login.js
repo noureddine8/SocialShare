@@ -22,17 +22,21 @@ function Login(props) {
   return (
     <View style={styles.container}>
       <View style={{ flex: 4, justifyContent: "center", alignItems: "center" }}>
-        <Text h2>Identifiez vous SVP</Text>
+        <Text style={{ color: "#0a66c2", fontSize: 38, fontWeight: "bold" }}>
+          SIGN IN
+        </Text>
       </View>
       <View style={{ flex: 4, justifyContent: "center" }}>
         <Input
+          labelStyle={{ color: "#0a66c2" }}
           label="E-mail"
           name="email"
           onChange={handleTextChange}
           onChangeText={(email) => setState({ ...state, email })}
         />
         <Input
-          label="Mot de passe"
+          label="Password"
+          labelStyle={{ color: "#0a66c2" }}
           name="password"
           onChange={handleTextChange}
           onChangeText={(password) => setState({ ...state, password })}
@@ -40,7 +44,15 @@ function Login(props) {
         />
       </View>
       <View style={{ flex: 2, justifyContent: "flex-start", padding: 10 }}>
-        <Button type="solid" title="S'inscrire" onPress={handleLogin} />
+        <Button
+          buttonStyle={{
+            backgroundColor: "#0a66c2",
+            borderRadius: 20,
+            height: 40,
+          }}
+          title="Sign in"
+          onPress={handleLogin}
+        />
       </View>
     </View>
   );

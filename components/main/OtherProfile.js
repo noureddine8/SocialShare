@@ -6,21 +6,46 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
 } from "react-native";
 import { Icon } from "react-native-elements";
-import { useSelector } from "react-redux";
+import firebase from "firebase";
+import { ActivityIndicator } from "react-native";
 
-function Profile() {
-  const user = useSelector((state) => state.user);
-  const [name, setname] = useState(null);
+function Profile({ route }) {
+  const [name, setName] = useState(null);
   const [posts, setPosts] = useState(null);
   useEffect(() => {
-    if (user.currentUser?.name && user.posts) {
-      setname(user.currentUser?.name);
-      setPosts(user.posts);
+    if (route.params.id) {
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(route.params.id)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.exists) {
+            setName(snapshot.data().name);
+          } else {
+            console.log("User not available, Please sign in");
+          }
+        });
+
+      firebase
+        .firestore()
+        .collection("posts")
+        .doc(route.params?.id)
+        .collection("userPosts")
+        .orderBy("creation", "asc")
+        .get()
+        .then((snapshot) => {
+          let posts = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            const id = doc.id;
+            return { id, ...data };
+          });
+          setPosts(posts);
+        });
     }
-  }, [user]);
+  }, [route.params]);
 
   return !posts || !name ? (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -70,7 +95,7 @@ function Profile() {
               }}
             >
               <Text style={{ fontSize: 18, fontWeight: "bold", color: "#EEF" }}>
-                Edit Profile
+                Follow
               </Text>
             </TouchableOpacity>
           </View>

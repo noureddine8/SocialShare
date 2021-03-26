@@ -22,7 +22,6 @@ export default function Add({ navigation }) {
   }, []);
   useEffect(() => {
     if (image) {
-      console.log("On change : ", image);
       navigation.navigate("Save", { image });
     }
   }, [image]);
@@ -60,33 +59,58 @@ export default function Add({ navigation }) {
           ref={(ref) => setCamera(ref)}
           style={styles.camera}
           type={type}
-          ratio={"16:9"}
+          ratio={"1:1"}
         />
       </View>
 
-      <View style={{ flex: 0.1, flexDirection: "row" }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          alignItems: "flex-end",
+          padding: 7,
+        }}
+      >
         <TouchableOpacity
           style={{
             flex: 1,
             justifyContent: "center",
             alignItems: "flex-start",
+            backgroundColor: "#0a66c2",
+            borderRadius: 15,
+            alignItems: "center",
+            height: "15%",
           }}
           onPress={pickImage}
         >
           <Text style={styles.text}> Pick </Text>
         </TouchableOpacity>
+        <View style={{ flex: 3, alignItems: "center" }}>
+          <TouchableOpacity
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 15,
+              alignItems: "center",
+              height: "15%",
+              backgroundColor: "#0a66c2",
+              width: "50%",
+            }}
+            onPress={takePicture}
+          >
+            <Text style={styles.text}> Cheese </Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           style={{
-            flex: 3,
+            flex: 1,
             justifyContent: "center",
+            alignItems: "flex-end",
+            backgroundColor: "#0a66c2",
+            borderRadius: 15,
             alignItems: "center",
+            height: "15%",
           }}
-          onPress={takePicture}
-        >
-          <Text style={styles.text}> Cheese </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}
           onPress={() => {
             setType(
               type === Camera.Constants.Type.back
@@ -114,7 +138,8 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   text: {
-    fontSize: 18,
-    color: "black",
+    fontSize: 20,
+    color: "white",
+    fontWeight: "bold",
   },
 });

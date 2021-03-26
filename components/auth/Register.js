@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { Input, Button, Text } from "react-native-elements";
+import { View, StyleSheet, ScrollView, Text } from "react-native";
+import { Input, Button } from "react-native-elements";
 import firebase from "firebase";
 
 function Register(props) {
@@ -26,44 +26,69 @@ function Register(props) {
     }
   };
   return (
-    <View style={styles.container}>
-      <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
-        <Text h2>Creer votre compte</Text>
+    <ScrollView>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: 200,
+        }}
+      >
+        <Text style={{ color: "#0a66c2", fontSize: 38, fontWeight: "bold" }}>
+          Create an account
+        </Text>
       </View>
-      <View style={{ flex: 7, justifyContent: "flex-end" }}>
+      <View>
         <Input
-          label="Nom et Prénom"
+          label="Full name"
           name="name"
           onChange={handleTextChange}
           onChangeText={(name) => setState({ ...state, name })}
+          labelStyle={{ color: "#0a66c2" }}
         />
         <Input
           label="E-mail"
           name="email"
           onChange={handleTextChange}
           onChangeText={(email) => setState({ ...state, email })}
+          labelStyle={{ color: "#0a66c2" }}
         />
         <Input
-          label="Mot de passe"
+          label="Password"
           name="password"
           onChange={handleTextChange}
           onChangeText={(password) => setState({ ...state, password })}
           secureTextEntry={true}
+          labelStyle={{ color: "#0a66c2" }}
         />
         <Input
-          label="Mot de passe"
+          label="Confirm password"
           name="confirm"
           onChangeText={(password) => setState({ ...state, confirm: password })}
           secureTextEntry={true}
+          labelStyle={{ color: "#0a66c2" }}
         />
       </View>
-      <View style={{ flex: 1, justifyContent: "center", padding: 10 }}>
-        <Button type="solid" title="S'inscrire" onPress={handleRegister} />
+      <View
+        style={{
+          justifyContent: "center",
+          padding: 10,
+          height: 92,
+        }}
+      >
+        <Button
+          buttonStyle={{
+            backgroundColor: "#0a66c2",
+            borderRadius: 20,
+            height: 40,
+          }}
+          title="Sign up"
+          onPress={handleRegister}
+        />
       </View>
-    </View>
+    </ScrollView>
   );
 }
-const styles = StyleSheet.create({
-  container: { backgroundColor: "#f5faf6", flex: 1, justifyContent: "center" },
-});
+const styles = StyleSheet.create({});
 export default Register;

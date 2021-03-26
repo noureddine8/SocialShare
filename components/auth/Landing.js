@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ImageBackground, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { Button } from "react-native-elements";
 
 function Landing({ navigation }) {
@@ -11,20 +11,52 @@ function Landing({ navigation }) {
   };
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={styles.image}
-        source={require("../../images/background.jpg")}
+      <View
+        style={{
+          flex: 6,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#0a66c2",
+          borderBottomRightRadius: 85,
+          borderBottomStartRadius: 85,
+        }}
       >
-        <View
-          style={{ flex: 6, justifyContent: "center", alignItems: "center" }}
-        >
-          <Text style={styles.text}>Social</Text>
-        </View>
-        <View style={{ flex: 4, justifyContent: "space-evenly" }}>
-          <Button title="S'inscrire" onPress={handleRegister} />
-          <Button title="S'identifier" onPress={handleLogin} />
-        </View>
-      </ImageBackground>
+        <Text style={styles.text}>Social</Text>
+        <Text style={styles.secondaryText}>
+          Share, Connect and Keep In Touch.
+        </Text>
+      </View>
+
+      <View
+        style={{
+          borderTopRightRadius: 85,
+          borderTopStartRadius: 85,
+          flex: 5,
+          justifyContent: "space-evenly",
+          backgroundColor: "#0a66c2",
+          marginTop: 1,
+          paddingHorizontal: 10,
+        }}
+      >
+        <Button
+          titleStyle={{ color: "#0a66c2", fontSize: 20, fontWeight: "bold" }}
+          buttonStyle={{
+            backgroundColor: "white",
+            borderRadius: 40,
+          }}
+          title="SIGN IN"
+          onPress={handleLogin}
+        />
+        <Button
+          titleStyle={{ color: "#0a66c2", fontSize: 20, fontWeight: "bold" }}
+          buttonStyle={{
+            backgroundColor: "white",
+            borderRadius: 40,
+          }}
+          title="SIGN UP"
+          onPress={handleRegister}
+        />
+      </View>
     </View>
   );
 }
@@ -35,7 +67,16 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "center",
   },
-  text: { fontSize: 50, fontFamily: "monospace", fontWeight: "bold" },
+  text: {
+    fontSize: 100,
+    fontWeight: "bold",
+    color: "white",
+  },
+  secondaryText: {
+    fontSize: 20,
+    color: "#bedbf7",
+    fontFamily: "italic",
+  },
 });
 
 export default Landing;

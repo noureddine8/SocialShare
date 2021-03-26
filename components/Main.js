@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Feed from "./main/Feed";
 import Profile from "./main/Profile";
+import Search from "./main/Search";
 
 const Empty = () => {
   return null;
@@ -26,13 +27,27 @@ function Main(props) {
 
   const Tab = createMaterialBottomTabNavigator();
   return (
-    <Tab.Navigator initialRouteName="Feed" labeled={false}>
+    <Tab.Navigator
+      initialRouteName="Feed"
+      labeled={false}
+      barStyle={{ backgroundColor: "#fff" }}
+      activeColor="#0a66c2"
+    >
       <Tab.Screen
         name="Feed"
         component={Feed}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="magnify" color={color} size={26} />
           ),
         }}
       />
@@ -52,6 +67,11 @@ function Main(props) {
         }}
       />
       <Tab.Screen
+        listeners={() => ({
+          tabPress: () => {
+            dispatch(fetchUserPosts());
+          },
+        })}
         name="Profile"
         component={Profile}
         options={{
