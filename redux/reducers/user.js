@@ -1,5 +1,5 @@
 import * as ActionTypes from "../ActionTypes";
-const initialState = { currentUser: null, posts: [] };
+const initialState = { currentUser: null, posts: [], following: [] };
 
 const user = (state = initialState, action) => {
   switch (action.type) {
@@ -13,6 +13,9 @@ const user = (state = initialState, action) => {
         ...state,
         posts: action.posts,
       };
+    case ActionTypes.USER_FOLLOWING_STATE_CHANGED:
+      return { ...state, following: action.following };
+
     default:
       return state;
   }

@@ -32,10 +32,11 @@ function Profile() {
         <View style={{ flex: 1 }}>
           <View
             style={{
-              flex: 0.3,
+              flex: 0.1,
               justifyContent: "space-between",
               flexDirection: "row",
               margin: 5,
+              backgroundColor: "#ff0<< VV",
             }}
           >
             <Icon
@@ -54,10 +55,62 @@ function Profile() {
               color="#0a66c2"
             />
           </View>
-          <Text style={styles.text}>{name}</Text>
           <View
             style={{
-              flew: 1,
+              flex: 0.5,
+              alignItems: "center",
+              flexDirection: "row",
+              padding: 5,
+            }}
+          >
+            <View style={{ flex: 4 / 10 }}>
+              <Text style={styles.text}>{name}</Text>
+            </View>
+            <View
+              style={{
+                flex: 3 / 10,
+
+                padding: 5,
+              }}
+            >
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#0a66c2",
+                  borderRadius: 25,
+                }}
+              >
+                <Text style={{ color: "white", fontSize: 18 }}>Followers</Text>
+                <Text style={{ color: "white", fontSize: 17 }}>50</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flex: 3 / 10,
+
+                padding: 5,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: "#0a66c2",
+                  borderRadius: 25,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "white", fontSize: 18 }}>Following</Text>
+                <Text style={{ color: "white", fontSize: 17 }}>
+                  {user.following.length}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 0.4,
+              justifyContent: "center",
             }}
           >
             <TouchableOpacity
@@ -130,14 +183,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#d9ebfc",
   },
   userInfo: {
-    flex: 4 / 10,
-  },
-  posts: {
     flex: 5 / 10,
   },
+  posts: {
+    flex: 4 / 10,
+  },
   text: {
-    flex: 0.5,
-    margin: 20,
     color: "black",
     fontStyle: "italic",
     fontWeight: "bold",

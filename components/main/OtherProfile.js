@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import { Icon } from "react-native-elements";
+import { Text, View, StyleSheet, FlatList, Image } from "react-native";
+import { Icon, Button } from "react-native-elements";
 import firebase from "firebase";
+import { useSelector, useDispatch } from "react-redux";
 import { ActivityIndicator } from "react-native";
+import { fetchUserFollowing } from "../../redux/actions/user";
 
 function Profile({ route }) {
   const [name, setName] = useState(null);
   const [posts, setPosts] = useState(null);
+  const [following, setFollowing] = useState(null);
+
+  //redux
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(fetchUserFollowing());
+  }, []);
+
   useEffect(() => {
     if (route.params.id) {
       firebase
@@ -45,9 +50,38 @@ function Profile({ route }) {
           setPosts(posts);
         });
     }
-  }, [route.params]);
+    if (state.following.indexOf(route.params.id) > -1) {
+      setFollowing(true);
+    } else {
+      setFollowing(false);
+    }
+  }, [route.params.id, state.following]);
 
-  return !posts || !name ? (
+  const handleFollow = () => {
+    if (following) {
+      firebase
+        .firestore()
+        .collection("following")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("userFollowing")
+        .doc(route.params.id)
+        .delete();
+      setFollowing((prev) => !prev);
+    } else {
+      firebase
+        .firestore()
+        .collection("following")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("userFollowing")
+        .doc(route.params.id)
+        .set({});
+      setFollowing((prev) => !prev);
+    }
+  };
+
+  const backGround = following ? "#fff" : "#0a66c2";
+
+  return !posts || !name || following == null ? (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <ActivityIndicator size="large" color="#0a66c2" />
     </View>
@@ -82,22 +116,20 @@ function Profile({ route }) {
           <Text style={styles.text}>{name}</Text>
           <View
             style={{
-              flew: 1,
+              flex: 1,
+              padding: 10,
             }}
           >
-            <TouchableOpacity
-              style={{
-                borderRadius: 20,
-                backgroundColor: "#0a66c2",
+            <Button
+              type={following ? "outline" : "solid"}
+              title={following ? "Following" : "Follow"}
+              containerStyle={{
                 justifyContent: "center",
-                alignItems: "center",
-                height: "34%",
+                width: "100%",
               }}
-            >
-              <Text style={{ fontSize: 18, fontWeight: "bold", color: "#EEF" }}>
-                Follow
-              </Text>
-            </TouchableOpacity>
+              buttonStyle={{ backgroundColor: backGround }}
+              onPress={handleFollow}
+            />
           </View>
         </View>
       </View>

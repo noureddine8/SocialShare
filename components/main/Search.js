@@ -67,9 +67,13 @@ function Search({ navigation }) {
                 alignItems: "center",
                 margin: 4,
               }}
-              onPress={() =>
-                navigation.navigate("OtherProfile", { id: item.id })
-              }
+              onPress={() => {
+                if (item.id === firebase.auth().currentUser.uid) {
+                  navigation.navigate("Profile");
+                } else {
+                  navigation.navigate("OtherProfile", { id: item.id });
+                }
+              }}
             >
               <Text style={{ fontSize: 20, color: "#fff", fontWeight: "bold" }}>
                 {item.name}
