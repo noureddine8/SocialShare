@@ -12,16 +12,13 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Feed from "./main/Feed";
 import Profile from "./main/Profile";
 import Search from "./main/Search";
-import firebase from "firebase";
 
 const Empty = () => {
   return null;
 };
 
-function Main(props) {
+function Main() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -29,9 +26,6 @@ function Main(props) {
     dispatch(fetchUserFollowing());
     dispatch(fetchUserFollowed());
   }, []);
-  useEffect(() => {
-    setCurrentUser(user.currentUser);
-  }, [user]);
 
   const Tab = createMaterialBottomTabNavigator();
   return (
