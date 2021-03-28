@@ -1,9 +1,10 @@
 # SocialShare
 
 <h2 align="center">
+ 
   **Social** is a social media app that was developed using React native.<br />
 
-**Social** is inspired by Instagram, it allows the users to share their photos with other users.<br />
+   **Social** is inspired by Instagram, it allows the users to share their photos with other users.<br />
 
   <a href="https://reactnative.dev/">
     React Native
