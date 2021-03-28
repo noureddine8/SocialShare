@@ -12,7 +12,6 @@ const FeedPosts = ({ name, url, caption }) => {
         height: 450,
         borderBottomWidth: 1,
         borderColor: "#0a66c2",
-        marginTop: 50,
       }}
     >
       <View
@@ -43,12 +42,12 @@ const FeedPosts = ({ name, url, caption }) => {
           justifyContent: "space-between",
         }}
       >
-        <Icon name="heart" type="font-awesome" size={28} color="#0a66c2" />
+        <Icon name="heart" type="font-awesome" size={28} color="#f00" />
         <Icon name="comment" type="font-awesome" size={28} color="#0a66c2" />
         <Icon name="share" type="font-awesome" size={28} color="#0a66c2" />
       </View>
       <View style={{ height: 50, padding: 10 }}>
-        <Text>{caption}</Text>
+        <Text style={{ fontSize: 16 }}>{caption}</Text>
       </View>
     </View>
   );
@@ -57,46 +56,64 @@ const FeedPosts = ({ name, url, caption }) => {
 function Feed() {
   const [posts, setPosts] = useState(null);
   const following = useSelector((state) => state.user.following);
-  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    if (following && !loaded) {
-      following.map((id) => {
-        let name;
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(id)
-          .get()
-          .then((data) => {
-            if (data.exists) {
-              name = data.data().name;
-            }
-          });
-
-        firebase
-          .firestore()
-          .collection("posts")
-          .doc(id)
-          .collection("userPosts")
-          .orderBy("creation", "asc")
-          .get()
-          .then((snapshot) => {
-            snapshot.docs.map((doc) => {
-              if (posts === null) {
-                setPosts([{ ...doc.data(), name }]);
-                setLoaded(true);
-              } else {
-                setPosts((prev) => [...prev, { ...doc.data(), name }]);
+    if (following) {
+      setPosts(null);
+      if (following.length > 0) {
+        following.map((id) => {
+          let name;
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(id)
+            .get()
+            .then((data) => {
+              if (data.exists) {
+                name = data.data().name;
               }
             });
-          });
-      });
+
+          firebase
+            .firestore()
+            .collection("posts")
+            .doc(id)
+            .collection("userPosts")
+            .orderBy("creation", "asc")
+            .get()
+            .then((snapshot) => {
+              snapshot.docs.map((doc) => {
+                setPosts((prev) => {
+                  if (!prev) return [{ ...doc.data(), name }];
+                  else return [...prev, { ...doc.data(), name }];
+                });
+              });
+            });
+        });
+      } else {
+        setPosts([]);
+      }
     }
   }, [following]);
 
-  return posts === null ? (
+  return !posts ? (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <ActivityIndicator size="large" color="#0a66c2" />
+    </View>
+  ) : posts.length === 0 ? (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#d9ebfc",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text style={{ fontSize: 20, fontWeight: "bold", color: "#0a66c2" }}>
+        No Posts To Show.
+      </Text>
+      <Text style={{ fontSize: 20, fontWeight: "bold", color: "#0a66c2" }}>
+        Not Yet.
+      </Text>
     </View>
   ) : (
     <View style={{ flex: 1, backgroundColor: "#d9ebfc" }}>

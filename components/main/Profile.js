@@ -1,3 +1,4 @@
+import firebase from "firebase";
 import React, { useEffect, useState } from "react";
 import {
   Text,
@@ -8,10 +9,12 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
+import { logout } from "../../redux/actions/user";
 import { Icon } from "react-native-elements";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Profile() {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [name, setname] = useState(null);
   const [posts, setPosts] = useState(null);
@@ -21,6 +24,10 @@ function Profile() {
       setPosts(user.posts);
     }
   }, [user]);
+  const onLogout = () => {
+    dispatch(logout());
+    firebase.auth().signOut();
+  };
 
   return !posts || !name ? (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -30,34 +37,31 @@ function Profile() {
     <View style={styles.container}>
       <View style={styles.userInfo}>
         <View style={{ flex: 1 }}>
-          <View
+          <TouchableOpacity
             style={{
-              flex: 0.1,
-              justifyContent: "space-between",
+              flex: 0.12,
+              alignItems: "center",
               flexDirection: "row",
               margin: 5,
-              backgroundColor: "#ff0<< VV",
+              backgroundColor: "#F00",
+              alignSelf: "flex-end",
+              borderRadius: 15,
             }}
+            onPress={onLogout}
           >
+            <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
+              LOGOUT
+            </Text>
             <Icon
-              name="face"
-              onPress={() => console.log("hello")}
+              style={{ marginHorizontal: 2 }}
+              name="logout"
               size={28}
-              color="#0a66c2"
+              color="#fff"
             />
-            <Icon
-              style={{
-                margin: 10,
-              }}
-              name="settings"
-              onPress={() => console.log("hello")}
-              size={28}
-              color="#0a66c2"
-            />
-          </View>
+          </TouchableOpacity>
           <View
             style={{
-              flex: 0.5,
+              flex: 0.38,
               alignItems: "center",
               flexDirection: "row",
               padding: 5,
@@ -158,7 +162,7 @@ function Profile() {
               marginTop: 50,
             }}
           >
-            No posts to show
+            You don't have any post yet
           </Text>
         ) : (
           <FlatList

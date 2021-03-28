@@ -23,7 +23,13 @@ const user = (state = initialState, action) => {
 
     case ActionTypes.USER_FOLLOWED_STATE_CHANGED:
       return { ...state, followers: action.followers };
-
+    case ActionTypes.USER_LOGOUT:
+      return initialState;
+    case ActionTypes.USER_FOLLOWING_STATE_CLEARED:
+      return {
+        ...state,
+        following: state.following.filter((foll) => foll !== action.id),
+      };
     default:
       return state;
   }

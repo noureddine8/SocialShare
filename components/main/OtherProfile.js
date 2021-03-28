@@ -5,6 +5,7 @@ import firebase from "firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { ActivityIndicator } from "react-native";
 import { fetchUserFollowing } from "../../redux/actions/user";
+import { USER_FOLLOWING_STATE_CHANGED } from "../../redux/ActionTypes";
 
 function Profile({ route }) {
   const [name, setName] = useState(null);
@@ -78,7 +79,7 @@ function Profile({ route }) {
           setFollowers(followers);
         });
     }
-    if (state.following.indexOf(route.params.id) > -1) {
+    if (state.following && state.following.indexOf(route.params.id) > -1) {
       setFollowing(true);
     } else {
       setFollowing(false);
@@ -104,6 +105,7 @@ function Profile({ route }) {
         .delete();
 
       setFollowing((prev) => !prev);
+      dispatch({ type: USER_FOLLOWING_STATE_CHANGED, id: route.params.id });
     } else {
       firebase
         .firestore()

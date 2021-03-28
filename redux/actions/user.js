@@ -4,7 +4,12 @@ import {
   USER_POSTS_STATE_CHANGED,
   USER_FOLLOWING_STATE_CHANGED,
   USER_FOLLOWED_STATE_CHANGED,
+  USER_LOGOUT,
 } from "../ActionTypes";
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: USER_LOGOUT });
+};
 
 export const fetchUser = () => (dispatch) => {
   firebase

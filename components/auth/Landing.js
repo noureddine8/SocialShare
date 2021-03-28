@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
   secondaryText: {
     fontSize: 20,
     color: "#bedbf7",
-    fontFamily: "italic",
   },
 });
 

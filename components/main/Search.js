@@ -15,7 +15,7 @@ function Search({ navigation }) {
     firebase
       .firestore()
       .collection("users")
-      .where("name", "==", search)
+      .where("name", ">=", search)
       .get()
       .then((snapshot) => {
         let users = snapshot.docs.map((doc) => {
@@ -25,7 +25,6 @@ function Search({ navigation }) {
         });
         setUsers(users);
       });
-    console.log(users);
   };
   return (
     <View
