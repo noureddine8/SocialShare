@@ -13,5 +13,8 @@
 ## Register Screen
 <img src ="screenshots/Register.jpg" width="270" height="585" />
 
+## Feed Screen
+<img src ="screenshots/Landing.jpg" width="270" height="585" />
+
 
 
