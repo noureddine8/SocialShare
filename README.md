@@ -4,10 +4,14 @@
 **Social** is inspired by Instagram, it allows the users to share their photos with other users.
 
 # Screenshots
-## Landing Page 
+## Landing Screen 
 <img src ="screenshots/Landing.jpg" width="270" height="585" />
 
-## Login Page
+## Login Screen
 <img src ="screenshots/Login.jpg" width="270" height="585" />
+
+## Register Screen
+<img src ="screenshots/Register.jpg" width="270" height="585" />
+
 
 
