@@ -16,5 +16,13 @@
 ## Feed Screen
 <img src ="screenshots/Feed.jpg" width="270" height="585" />
 
+## Profile Screen
+<img src ="screenshots/Profile.jpg" width="270" height="585" />
+
+## Search Screen
+<img src ="screenshots/Users.jpg" width="270" height="585" />
+
+
+
 
 
