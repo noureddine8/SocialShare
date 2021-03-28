@@ -5,6 +5,6 @@
 
 # Screenshots
 
-<img src ="screenshots/HomeScreen.jpg" width="'400" height="800" />
+<img src ="screenshots/Landing.jpg" width="'400" height="800" />
 
 
