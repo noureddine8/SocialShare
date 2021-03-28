@@ -14,7 +14,7 @@
 <img src ="screenshots/Register.jpg" width="270" height="585" />
 
 ## Feed Screen
-<img src ="screenshots/Landing.jpg" width="270" height="585" />
+<img src ="screenshots/Posts.jpg" width="270" height="585" />
 
 
 
