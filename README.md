@@ -5,9 +5,9 @@
 
 # Screenshots
 ## Landing Page 
-<img src ="screenshots/Landing.jpg" width="216" height="468" />
+<img src ="screenshots/Landing.jpg" width="324" height="702" />
 
 ## Login Page
-<img src ="screenshots/Login.jpg" width="216" height="468" />
+<img src ="screenshots/Login.jpg" width="324" height="702" />
 
 
