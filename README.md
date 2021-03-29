@@ -36,7 +36,9 @@
 
 # Screenshots
 ## Landing Screen 
+<kbd>
 <img src ="screenshots/Landing.jpg" width="270" height="585" />
+</kbd>
 
 ## Login Screen
 <img src ="screenshots/Login.jpg" width="270" height="585" />
