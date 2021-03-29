@@ -41,20 +41,30 @@
 </kbd>
 
 ## Login Screen
+<kbd>
 <img src ="screenshots/Login.jpg" width="270" height="585" />
+</kbd>
+
 
 ## Register Screen
+<kbd>
 <img src ="screenshots/Register.jpg" width="270" height="585" />
+</kbd>
 
 ## Feed Screen
+<kbd>
 <img src ="screenshots/Feed.jpg" width="270" height="585" />
+</kbd>
 
 ## Profile Screen
+<kbd>
 <img src ="screenshots/Profile.jpg" width="270" height="585" />
+</kbd>
 
 ## Search Screen
+kbd>
 <img src ="screenshots/Users.jpg" width="270" height="585" />
-
+</kbd>
 
 
 
