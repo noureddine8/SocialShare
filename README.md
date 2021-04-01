@@ -64,7 +64,7 @@
 </kbd>
 
 ## Search Screen
-kbd>
+<kbd>
 <img src ="screenshots/Users.jpg" width="270" height="585" />
 </kbd>
 
